@@ -885,6 +885,7 @@ body {
   border-radius:16px;
   padding:12px 14px;
   font-weight:900;
+
   animation: toastIn .18s ease;
 }
 
