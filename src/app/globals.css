@@ -27,9 +27,13 @@ body {
   background:var(--card); border:1px solid var(--line);
   padding:12px 12px; border-radius:999px; margin-bottom:14px;
 }
-.search input{
-  flex:1; background:transparent; border:none; outline:none; color:var(--text);
-  font-size:16px;
+.search input {
+    color: #000000;
+    background: none;
+    border: 0;
+    outline: none;
+    flex: 1;
+    font-size: 14px;
 }
 
 .sectionRow{ display:flex; align-items:center; justify-content:space-between; margin:14px 2px 10px; }
@@ -653,13 +657,13 @@ body {
   padding:12px 12px;
   margin: 8px 0 10px;
 }
-.search input{
-  flex:1;
-  background:transparent;
-  border:0;
-  outline:none;
-  color:var(--text);
-  font-size:14px;
+.search input {
+    color: #000000;
+    background: none;
+    border: 0;
+    outline: none;
+    flex: 1;
+    font-size: 14px;
 }
 .xBtn{
   border:1px solid var(--line);
