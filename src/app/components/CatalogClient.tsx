@@ -28,23 +28,24 @@ export default function CatalogClient({
     return ["Акции", ...Array.from(set)];
   }, [products]);
 
-  const filtered = useMemo(() => {
-    const query = q.trim().toLowerCase();
+ const filtered = useMemo(() => {
+  const query = q.trim().toLowerCase();
 
+  // ✅ 1) Если есть поиск — ищем по ВСЕМ категориям
+  if (query) {
     return products.filter((p) => {
-      const inTab =
-        tab === "Акции"
-          ? typeof p.salePrice === "number" && p.salePrice > 0
-          : p.category === tab;
-
-      if (!inTab) return false;
-
-      if (!query) return true;
-
-      const hay = `${p.title}  ${p.category ?? ""}`.toLowerCase();
+      const hay = `${p.title} ${p.category ?? ""}`.toLowerCase();
       return hay.includes(query);
     });
-  }, [products, q, tab]);
+  }
+
+  // ✅ 2) Если поиска нет — фильтруем по вкладке (как раньше)
+  return products.filter((p) => {
+    return tab === "Акции"
+      ? typeof p.salePrice === "number" && p.salePrice > 0
+      : p.category === tab;
+  });
+}, [products, q, tab]);
 
   const setTabSafe = (t: string) => {
     setTab(t);
