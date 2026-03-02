@@ -60,6 +60,7 @@ export default function ProductCard({ p }: { p: Product }) {
                   title: p.title,
                   price: p.price,
                   salePrice: p.salePrice,
+                  unit: p.unit,
                 },
                 min // ✅ для кг старт 0.5
               );

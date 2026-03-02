@@ -1436,3 +1436,13 @@ body {
   object-fit: cover;
   display:block;
 }
+.notice{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#617824;
+  padding:12px;
+  border-radius:14px;
+  font-size:13px;
+  line-height:1.35;
+  margin:12px 0;
+}

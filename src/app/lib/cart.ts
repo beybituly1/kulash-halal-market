@@ -6,6 +6,7 @@ export type CartItem = {
   price: number;
   salePrice?: number;
   qty: number;
+  unit?: "шт" | "кг";
 };
 
 const KEY = "kulash_cart_v1";

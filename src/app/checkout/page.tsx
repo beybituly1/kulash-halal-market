@@ -34,6 +34,7 @@ function upper(s: string) {
 
 export default function CheckoutPage() {
   const [items, setItems] = useState<CartItem[]>([]);
+  const hasWeight = items.some((i) => i.unit === "кг");
   const [mounted, setMounted] = useState(false);
 
   // данные клиента
@@ -145,6 +146,13 @@ export default function CheckoutPage() {
     items.forEach((i, idx) => {
       lines.push(`${idx + 1}) ${i.title} — ${i.qty} шт — ${itemPrice(i) * i.qty} тг`);
     });
+    const hasWeight = items.some((i) => i.unit === "кг");
+
+if (hasWeight) {
+  lines.push("");
+  lines.push("⚠️ Весовые товары взвешиваются при сборке.");
+  lines.push("Итоговая сумма может немного измениться.");
+}
 
     lines.push("");
     lines.push(`Товары: ${sum} тг`);
@@ -201,6 +209,12 @@ export default function CheckoutPage() {
       <div className="sectionTitle" style={{ fontSize: 20, marginBottom: 12 }}>
         ✅ Оформление
       </div>
+      {hasWeight && (
+  <div className="notice">
+    ⚠️ Внимание: весовые товары взвешиваются при сборке заказа.
+    Итоговая сумма может немного измениться. Мы согласуем с вами перед доставкой.
+  </div>
+)}
 
       {items.length === 0 ? (
         <div className="muted">Корзина пустая</div>
