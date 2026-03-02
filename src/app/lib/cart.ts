@@ -43,8 +43,10 @@ export function addToCart(
 }
 
 export function setQty(id: string, qty: number): CartItem[] {
+  const rounded = Math.max(0, Math.round(qty * 2) / 2); // ✅ шаг 0.5
+
   const cart = readCart().map((x) =>
-    x.id === id ? { ...x, qty } : x
+    x.id === id ? { ...x, qty: rounded } : x
   );
 
   const filtered = cart.filter((x) => x.qty > 0);

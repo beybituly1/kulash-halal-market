@@ -14,42 +14,39 @@ export default function ProductCard({ p }: { p: Product }) {
   useEffect(() => {
     const sync = () => setLocalQty(qtyOf(p.id));
     sync();
+
     window.addEventListener("cartUpdated", sync);
     return () => window.removeEventListener("cartUpdated", sync);
   }, [p.id]);
 
-  const hasSale = typeof p.salePrice === "number" && p.salePrice > 0;
+  const isKg = p.unit === "кг";
+  const step = isKg ? 0.5 : 1;
+  const min = isKg ? 0.5 : 1;
+
+  const showPrice = (v: number) => `${v} тг${isKg ? " / кг" : ""}`;
 
   return (
     <div className="pc">
-      {/* FOTO */}
       <div className="pcImgWrap">
         {p.image ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img
-            className="pcImg"
-            src={p.image}
-            alt={p.title}
-            loading="lazy"
-            referrerPolicy="no-referrer"
-          />
+          <img src={p.image} alt={p.title} />
         ) : (
           <div className="pcNoImg">🛒</div>
         )}
       </div>
 
-      {/* TEXT */}
       <div className="pcBody">
         <div className="pcTitle">{p.title}</div>
 
         <div className="pcPrices">
-          {hasSale ? (
+          {p.salePrice ? (
             <>
-              <span className="pcOld">{p.price} тг</span>
-              <span className="pcSale">{p.salePrice} тг</span>
+              <span className="pcOld">{showPrice(p.price)}</span>
+              <span className="pcSale">{showPrice(p.salePrice)}</span>
             </>
           ) : (
-            <span className="pcNormal">{p.price} тг</span>
+            <span className="pcNormal">{showPrice(p.price)}</span>
           )}
         </div>
 
@@ -64,7 +61,7 @@ export default function ProductCard({ p }: { p: Product }) {
                   price: p.price,
                   salePrice: p.salePrice,
                 },
-                1
+                min // ✅ для кг старт 0.5
               );
               window.dispatchEvent(
                 new CustomEvent("toast", {
@@ -72,16 +69,36 @@ export default function ProductCard({ p }: { p: Product }) {
                 })
               );
             }}
+            type="button"
           >
             +
           </button>
         ) : (
           <div className="pcQty">
-            <button onClick={() => setQty(p.id, qty - 1)}>−</button>
-            <span>{qty}</span>
-            <button onClick={() => setQty(p.id, qty + 1)}>+</button>
+            <button
+              type="button"
+              onClick={() => setQty(p.id, qty - step)}
+              aria-label="Уменьшить"
+            >
+              −
+            </button>
+
+            <span>
+              {isKg ? `${qty.toFixed(1)} кг` : qty}
+            </span>
+
+            <button
+              type="button"
+              onClick={() => setQty(p.id, qty + step)}
+              aria-label="Увеличить"
+            >
+              +
+            </button>
           </div>
         )}
+
+        {/* маленькая подсказка для весовых */}
+        {isKg ? <div className="muted" style={{ marginTop: 6 }}>Мин: 0.5 кг</div> : null}
       </div>
     </div>
   );

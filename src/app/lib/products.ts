@@ -52,6 +52,7 @@ export async function fetchProducts(): Promise<Product[]> {
     const price = toNumber(r["цена"]);
     const saleRaw = String(r["цена_акции"] ?? "").trim();
     const salePrice = saleRaw ? toNumber(saleRaw) : undefined;
+    const unit = String(r["unit"] ?? "").trim() as "шт" | "кг" | "";
 
     const image =
       String(r["image"] ?? r["фото"] ?? r["photo"] ?? "").trim() || undefined;
@@ -68,6 +69,7 @@ export async function fetchProducts(): Promise<Product[]> {
       salePrice,
       image,
       inStock,
+      unit: unit === "кг" ? "кг" : "шт",
     };
   })
   .filter(Boolean) as Product[];
