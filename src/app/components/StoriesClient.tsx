@@ -37,7 +37,7 @@ export default function StoriesClient({ stories = [] }: { stories?: Story[] }) {
 
     timerRef.current = window.setInterval(() => {
       setActive((i) => (i + 1) % stories.length);
-    }, 10000);
+    }, 15000);
 
     return () => {
       if (timerRef.current) window.clearInterval(timerRef.current);
