@@ -1,8 +1,11 @@
 import "./globals.css";
 import Link from "next/link";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Kulash Halal Market",
+  description:
+    "Kulash Halal Market — доставка халяльных продуктов в Алматы. Свежие продукты, молочные товары, мясо и многое другое.",
   verification: {
     google: "6JuxN9FeXtNswnWD6Tx5kUxzRbRb1Zzheo2MxSxHGUo",
   },
