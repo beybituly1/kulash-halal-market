@@ -16,8 +16,8 @@ type Promo = {
 
 const WA = process.env.NEXT_PUBLIC_WHATSAPP || "77475114101";
 const SHOP = process.env.NEXT_PUBLIC_SHOP_NAME || "Kulash Halal Market";
-const FREE_FROM = Number(process.env.NEXT_PUBLIC_FREE_DELIVERY_FROM || 5000);
-const FEE = Number(process.env.NEXT_PUBLIC_DELIVERY_FEE || 300);
+const FREE_FROM = 0;
+const FEE = 0;
 
 function itemPrice(i: CartItem) {
   return typeof i.salePrice === "number" && i.salePrice > 0 ? i.salePrice : i.price;
