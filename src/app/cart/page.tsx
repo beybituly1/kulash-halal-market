@@ -29,7 +29,7 @@ export default function CartPage() {
     [items]
   );
 
-  const delivery = sum >= FREE_FROM || sum === 0 ? 0 : FEE;
+  const delivery = 0;
   const total = sum + delivery;
 
   return (
