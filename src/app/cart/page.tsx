@@ -5,8 +5,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { readCart, setQty, clearCart, type CartItem } from "../lib/cart";
 
-const FREE_FROM = Number(process.env.NEXT_PUBLIC_FREE_DELIVERY_FROM || 5000);
-const FEE = Number(process.env.NEXT_PUBLIC_DELIVERY_FEE || 300);
+const FREE_FROM = 0;
+const FEE = 0;
 
 function itemPrice(i: CartItem) {
   return typeof i.salePrice === "number" && i.salePrice > 0 ? i.salePrice : i.price;
