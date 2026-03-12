@@ -51,9 +51,14 @@ body {
   padding:10px;
 }
 .img{
-  height:110px; border-radius: 14px;
-  background:#0f0f11; border:1px solid var(--line);
-  display:flex; align-items:center; justify-content:center;
+  width:100%;
+  aspect-ratio:1/1;
+  border-radius:14px;
+  background:#0f0f11;
+  border:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:center;
   overflow:hidden;
   margin-bottom:10px;
 }
