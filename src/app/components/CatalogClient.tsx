@@ -8,10 +8,12 @@ export default function CatalogClient({
   products,
   initialTab = "Акции",
   onTabChange,
+  hideTabs = false,
 }: {
   products: Product[];
   initialTab?: string;
   onTabChange?: (tab: string) => void;
+  hideTabs?: boolean;
 }) {
   const [q, setQ] = useState("");
   const [tab, setTab] = useState<string>(initialTab);
@@ -28,29 +30,26 @@ export default function CatalogClient({
     return ["Акции", ...Array.from(set)];
   }, [products]);
 
- const filtered = useMemo(() => {
-  const query = q.trim().toLowerCase();
+  const filtered = useMemo(() => {
+    const query = q.trim().toLowerCase();
 
-  // ✅ 1) Если есть поиск — ищем по ВСЕМ категориям
-  if (query) {
+    if (query) {
+      return products.filter((p) => {
+        const hay = `${p.title} ${p.category ?? ""}`.toLowerCase();
+        return hay.includes(query);
+      });
+    }
+
     return products.filter((p) => {
-      const hay = `${p.title} ${p.category ?? ""}`.toLowerCase();
-      return hay.includes(query);
+      return tab === "Акции"
+        ? typeof p.salePrice === "number" && p.salePrice > 0
+        : p.category === tab;
     });
-  }
-
-  // ✅ 2) Если поиска нет — фильтруем по вкладке (как раньше)
-  return products.filter((p) => {
-    return tab === "Акции"
-      ? typeof p.salePrice === "number" && p.salePrice > 0
-      : p.category === tab;
-  });
-}, [products, q, tab]);
+  }, [products, q, tab]);
 
   const setTabSafe = (t: string) => {
     setTab(t);
     onTabChange?.(t);
-    // при смене вкладки — очищаем поиск (чтобы не казалось что товаров нет)
     setQ("");
   };
 
@@ -70,18 +69,20 @@ export default function CatalogClient({
         ) : null}
       </div>
 
-      <div className="tabs">
-        {categories.map((c) => (
-          <button
-            key={c}
-            type="button"
-            className={`tab ${tab === c ? "active" : ""}`}
-            onClick={() => setTabSafe(c)}
-          >
-            {c}
-          </button>
-        ))}
-      </div>
+      {!hideTabs && (
+        <div className="tabs">
+          {categories.map((c) => (
+            <button
+              key={c}
+              type="button"
+              className={`tab ${tab === c ? "active" : ""}`}
+              onClick={() => setTabSafe(c)}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+      )}
 
       <div className="grid">
         {filtered.map((p) => (

@@ -7,7 +7,6 @@ import StoriesClient from "./components/StoriesClient";
 import CatalogClient from "./components/CatalogClient";
 import Toast from "./components/Toast";
 import OrderBar from "./components/OrderBar";
-import Link from "next/link";
 
 export default function HomeClient({
   products,
@@ -20,20 +19,60 @@ export default function HomeClient({
 }) {
   const [tab, setTab] = useState<string>(initialTab);
 
+  const categories = Array.from(
+    new Set(products.map((p) => p.category).filter(Boolean))
+  );
+
+  const categoryCards = categories.map((category) => {
+    const firstWithImage = products.find(
+      (p) => p.category === category && p.image
+    );
+
+    return {
+      name: category,
+      image: firstWithImage?.image || "",
+    };
+  });
+
   return (
     <main className="main">
       <StoriesClient stories={stories} />
 
-      <div className="allCatsWrap">
-        <Link href="/categories" className="allCatsBtn">
-          Все категории
-        </Link>
+      <div className="catGridHome">
+        <button
+          type="button"
+          className={`catHomeCard ${tab === "Акции" ? "active" : ""}`}
+          onClick={() => setTab("Акции")}
+        >
+          <div className="catHomeThumb fallback">🔥</div>
+          <div className="catHomeName">Акции</div>
+        </button>
+
+        {categoryCards.map((c) => (
+          <button
+            key={c.name}
+            type="button"
+            className={`catHomeCard ${tab === c.name ? "active" : ""}`}
+            onClick={() => setTab(c.name)}
+          >
+            <div className="catHomeThumb">
+              {c.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={c.image} alt={c.name} />
+              ) : (
+                <div className="catHomeThumb fallback">🛒</div>
+              )}
+            </div>
+            <div className="catHomeName">{c.name}</div>
+          </button>
+        ))}
       </div>
 
       <CatalogClient
         products={products}
         initialTab={tab}
         onTabChange={setTab}
+        hideTabs
       />
 
       <Toast />
