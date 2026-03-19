@@ -1566,4 +1566,11 @@ body {
   text-align:center;
   margin-top:4px;
   line-height:1.1;
+}.catHomeCard{
+  color:#111;          /* черный текст */
+  text-decoration:none; /* убирает подчеркивание */
+}
+
+.catHomeCard *{
+  color:inherit;       /* чтобы всё внутри было таким же цветом */
 }
