@@ -83,7 +83,14 @@ export default function HomeClient({
           ))}
         </div>
       )}
-
+{pickedCategory && (
+  <button
+    className="backToCats"
+    onClick={() => setPickedCategory(false)}
+  >
+    ← Все категории
+  </button>
+)}
       <CatalogClient
         products={products}
         initialTab={tab}

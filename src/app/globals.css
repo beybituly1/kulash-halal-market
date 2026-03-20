@@ -1639,4 +1639,14 @@ body {
   z-index:20;
   background:var(--bg);
   padding-top:6px;
+}.backToCats{
+  margin:6px 0 8px;
+  padding:8px 12px;
+  border:none;
+  border-radius:10px;
+  background:#e9f3df;
+  color:#2f5d1d;
+  font-weight:700;
+  font-size:13px;
+  cursor:pointer;
 }
