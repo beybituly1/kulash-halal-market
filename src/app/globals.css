@@ -1662,7 +1662,7 @@ body {
   position:sticky;
   top:0;
   z-index:20;
-  background:var(--bg);
+  background:#f3fdf6;
 }
 
 .tabCard{
