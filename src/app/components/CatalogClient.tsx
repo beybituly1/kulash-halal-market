@@ -9,11 +9,13 @@ export default function CatalogClient({
   initialTab = "Акции",
   onTabChange,
   hideTabs = false,
+  compactTabs = false,
 }: {
   products: Product[];
   initialTab?: string;
   onTabChange?: (tab: string) => void;
   hideTabs?: boolean;
+  compactTabs?: boolean;
 }) {
   const [q, setQ] = useState("");
   const [tab, setTab] = useState<string>(initialTab);
@@ -70,7 +72,7 @@ export default function CatalogClient({
       </div>
 
       {!hideTabs && (
-        <div className="tabs">
+        <div className={`tabs ${compactTabs ? "tabsCompact" : ""}`}>
           {categories.map((c) => (
             <button
               key={c}
