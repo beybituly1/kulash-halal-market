@@ -32,6 +32,26 @@ export default function CatalogClient({
     return ["Акции", ...Array.from(set)];
   }, [products]);
 
+  const categoryCards = useMemo(() => {
+    return categories.map((category) => {
+      if (category === "Акции") {
+        return {
+          name: "Акции",
+          image: "",
+        };
+      }
+
+      const firstWithImage = products.find(
+        (p) => p.category === category && p.image
+      );
+
+      return {
+        name: category,
+        image: firstWithImage?.image || "",
+      };
+    });
+  }, [categories, products]);
+
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
 
@@ -73,14 +93,22 @@ export default function CatalogClient({
 
       {!hideTabs && (
         <div className={`tabs ${compactTabs ? "tabsCompact" : ""}`}>
-          {categories.map((c) => (
+          {categoryCards.map((c) => (
             <button
-              key={c}
+              key={c.name}
               type="button"
-              className={`tab ${tab === c ? "active" : ""}`}
-              onClick={() => setTabSafe(c)}
+              className={`tabCard ${tab === c.name ? "active" : ""}`}
+              onClick={() => setTabSafe(c.name)}
             >
-              {c}
+              <div className="tabCardThumb">
+                {c.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={c.image} alt={c.name} />
+                ) : (
+                  <div className="tabCardFallback">🔥</div>
+                )}
+              </div>
+              <div className="tabCardName">{c.name}</div>
             </button>
           ))}
         </div>
